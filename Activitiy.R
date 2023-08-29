@@ -39,4 +39,12 @@ joined_data <- full_join(mean_ice,mean_airtemp_year, by = "year4")
 ggplot(joined_data, aes(x = mean_air_temp, y = mean_ice_cover)) + geom_point()
 
 #Explore thaw dates since 1970. Create a subset of the ice cover duration data since 1970 (ok to include 1970), then convert the ice_off column to a Date. Use lubridate::yday() to pull the numeric day of the year from that Date. Create an exploratory plot of the ice off day (numeric day-of-the-year) from 1970 - present. Add a sentence or two below this exploratory graph describing the overall trend(s) you observe. 
-            
+
+ice_1970 <- ice_cover %>%
+  filter(year4 >= "1970") %>% 
+  mutate(ice_off = lubridate::ymd(ice_off)) %>% 
+  mutate(day_ice_off = lubridate::yday(ice_off))
+
+ggplot(data = ice_1970, aes(x = year4, y = day_ice_off)) +
+  geom_point()
+  
